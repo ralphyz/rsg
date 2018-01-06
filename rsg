@@ -7,7 +7,7 @@ from pathlib2 import Path
 def help():
     global ipaddr, port
 
-    print 'Syntax Error:\n\tpython %s [ip] [port]\n\nExamples:\n\tpython %s 192.168.1.10 4444\n\tpython %s 4444\n\tpython %s 192.168.1.10\n\n[ip|port] optional when %s contains an data' %(sys.argv[0],sys.argv[0],sys.argv[0],sys.argv[0], os.path.join(os.path.dirname(os.path.realpath(__file__)),'my_[ip|port].txt'))
+    print 'Syntax Error:\n\tpython %s [ip] [port]\n\nExamples:\n\tpython %s 192.168.1.10 4444\n\tpython %s 4444\n\tpython %s 192.168.1.10\n\n[ip|port] optional when %s contains data' %(sys.argv[0],sys.argv[0],sys.argv[0],sys.argv[0], os.path.join(os.path.dirname(os.path.realpath(__file__)),'my_[ip|port].txt'))
     sys.exit(-1)
 
 ip_file = os.path.join(os.path.dirname(os.path.realpath(__file__)),'my_ip.txt')
